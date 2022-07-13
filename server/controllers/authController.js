@@ -18,7 +18,12 @@ const resgisterUser = async (req, res) => {
             password: hashed,
         })
         const user = await newUser.save()
-        res.status(200).json(user)
+        if (user) {
+            const token = jwt.sign({ email: user.email, id: user._id }, "test", { expiresIn: "24h" });
+            const { password, ...others } = user._doc
+            res.status(200).json({ ...others, token })
+        }
+
 
     } catch (error) {
         res.status(500).json(error)
@@ -35,7 +40,7 @@ const loginUser = async (req, res) => {
         if (!validPassword) return req.status(404).json({ message: 'Wrong password' })
 
         if (oldUser && validPassword) {
-            const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, "test", { expiresIn: "1h" });
+            const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, "test", { expiresIn: "24h" });
             const { password, ...others } = oldUser._doc
             res.status(200).json({ ...others, token })
         }
