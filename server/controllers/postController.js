@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const post = require('../models/post');
+
 const Post = require('../models/post')
 
 const getAllPosts = async (req, res) => {
@@ -48,5 +48,5 @@ const commentPost = async (req, res) => {
 }
 
 module.exports = {
-    createPost
+    createPost, getAllPosts
 }

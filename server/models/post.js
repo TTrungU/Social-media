@@ -1,15 +1,24 @@
 const mongoose = require('mongoose')
 
 const postSchema = mongoose.Schema({
-    title: String,
-    message: String,
+    title: {
+        type: String,
+        required: true
+    },
+    message: {
+        type: String,
+        required: true
+    },
     creator: {
         type: mongoose.Types.ObjectId,
         ref: "User",
         required: true
     },
     tags: [String],
-    selectedFiles: String,
+    selectedFiles: {
+        type: String,
+        required: true
+    },
     comment: {
         type: [String],
         default: [],
