@@ -10,6 +10,8 @@ API.interceptors.request.use((req) => {
     return req;
 })
 
+export const getUser = (id) => API.get(`/api/user/${id}`)
+export const getAllUsers = () => API.get(`/api/user/`)
 export const signIn = (formData) => API.post('/api/user/signin', formData)
 export const signUp = (formData) => API.post('/api/user/signup', formData)
 

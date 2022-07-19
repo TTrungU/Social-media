@@ -14,6 +14,8 @@ const authReducer = (state = { authData: null }, action) => {
         case "LOGINFAIL":
             console.log("login fail")
             return { ...state, authData: null, loading: false, errors: true }
+        // case "GETUSER":
+        //     return { ...state, authData: action.data, loading: false, errors: false }
         default:
             return state;
     }

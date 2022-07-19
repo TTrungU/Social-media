@@ -100,10 +100,6 @@ const CreatePost = () => {
                             </button>
                         </div>
                     </div>
-
-
-
-
                 </div>
             </div>
         </div>

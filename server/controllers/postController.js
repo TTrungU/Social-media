@@ -1,11 +1,21 @@
 const { default: mongoose } = require('mongoose');
 
 const Post = require('../models/post')
+const User = require('../models/user')
 
 const getAllPosts = async (req, res) => {
     try {
-        const post = await Post.find()
-        res.status(200).json(post)
+        const posts = await Post.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "creator",
+                    foreignField: "_id",
+                    as: "creator_info",
+                }
+            },
+        ])
+        res.status(200).json(posts)
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -38,7 +48,13 @@ const createPost = async (req, res) => {
     }
 }
 const deletePost = async (req, res) => {
+    const { id } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+    await Post.findByIdAndRemove(id);
+
+    res.json({ message: "Post deleted successfully." });
 }
 const likePost = async (req, res) => {
 
@@ -48,5 +64,5 @@ const commentPost = async (req, res) => {
 }
 
 module.exports = {
-    createPost, getAllPosts
+    createPost, getAllPosts, deletePost
 }

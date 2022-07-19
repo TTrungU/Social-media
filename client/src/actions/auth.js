@@ -24,3 +24,20 @@ export const signup = (formData, router) => async (dispatch) => {
         console.log(error);
     }
 }
+export const getUser = (id) => async (dispatch) => {
+    try {
+        const { data } = await api.getUser(id)
+        dispatch({ type: "GETUSER", data })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getAllUsers = () => async (dispatch) => {
+    try {
+        const { data } = await api.getAllUsers()
+        dispatch({ type: "getAllUser", data })
+    } catch (error) {
+        console.log(error)
+    }
+}

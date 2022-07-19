@@ -33,7 +33,7 @@ const Login = ({ setOpenLoginForm, isLogin }) => {
 
 
     return (
-        <div className="absolute flex flex-col justify-center items-center top-0 right-0 bg-blackOverlay w-screen h-screen">
+        <div className="z-10 absolute flex flex-col justify-center items-center top-0 right-0 bg-blackOverlay w-screen h-screen">
             <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
                 <div className=" ml-5 w-full flex justify-end items-center ">
                     <AiFillCloseCircle fontSize={20} className="cursor-pointer" onClick={() => setOpenLoginForm(false)} />

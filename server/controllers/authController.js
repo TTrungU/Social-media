@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const { default: mongoose } = require('mongoose');
 const { json } = require('body-parser')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
@@ -51,4 +52,31 @@ const loginUser = async (req, res) => {
 
 }
 
-module.exports = { resgisterUser, loginUser }
+const getUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await User.findById(id)
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No user with id: ${id}`);
+        const { password, ...others } = user._doc
+        res.status(200).json(others)
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+const getAllUsers = async (req, res) => {
+
+    try {
+        const users = await User.find()
+
+        const newUsers = users.map((user) => {
+            const { password, ...others } = user._doc
+            return others
+        })
+        // console.log(...others)
+        res.status(200).json(newUsers)
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+module.exports = { resgisterUser, loginUser, getUser, getAllUsers }
