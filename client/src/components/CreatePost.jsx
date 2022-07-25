@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import FileBase from 'react-file-base64';
-import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import { categories } from '../utils/categories';
 import { createPost } from '../actions/post'
-import post from '../reducers/post';
+
 const CreatePost = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
     const [postData, setPostData] = useState({ title: '', message: '', creator: `${user._id}`, tags: [], selectedFiles: '' })
@@ -15,7 +17,7 @@ const CreatePost = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(createPost(postData))
+        dispatch(createPost(postData, navigate))
         console.log(postData)
     }
 

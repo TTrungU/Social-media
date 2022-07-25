@@ -5,7 +5,7 @@ import AuthForm from './AuthForm'
 import { useDispatch } from 'react-redux';
 import { IoMdAdd, IoMdSearch } from 'react-icons/io';
 
-const Navbar = () => {
+const Navbar = ({ setSearchTerm, searchTerm }) => {
 
     const dispatch = useDispatch();
     const [openLoginForm, setOpenLoginForm] = useState(false)
@@ -35,6 +35,8 @@ const Navbar = () => {
                 <input
                     placeholder="Search"
                     type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     className="p-2 w-full bg-white outline-none" />
             </div>
             <div className="flex items-center justify-between flex-row">

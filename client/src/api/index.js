@@ -15,6 +15,12 @@ export const getAllUsers = () => API.get(`/api/user/`)
 export const signIn = (formData) => API.post('/api/user/signin', formData)
 export const signUp = (formData) => API.post('/api/user/signup', formData)
 
-
 export const createPost = (newPost) => API.post('/api/posts/create', newPost)
-export const fetchPost = () => API.get('/api/posts/')
+export const fetchPostBySearch = (searchQuery) => API.get(`api/posts/search?searchQuery=${searchQuery}`)
+export const fecthPostByCreator = (id) => API.get(`api/posts/creator/${id}`)
+export const fetchPosts = () => API.get('/api/posts/')
+export const fetchPost = (id) => API.get(`/api/posts/${id}`)
+export const comment = (id, value) => API.post(`/api/posts/${id}/comment`, value)
+export const deleteComment = (id, commentId) => API.post(`/api/posts/${id}/deleteComment`, commentId)
+export const deletePost = (id) => API.delete(`/api/posts/${id}`);
+export const editPost = (id, newPost) => API.patch(`/api/posts/${id}`, newPost)

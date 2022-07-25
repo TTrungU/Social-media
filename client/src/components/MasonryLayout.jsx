@@ -1,18 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { getPosts } from '../actions/post'
+// import { useSelector, useDispatch } from 'react-redux';
+// import { getPosts, getPostsBySearch } from '../actions/post'
+
 import Masonry from 'react-masonry-css'
 import Post from './Post'
-const MasonryLayout = () => {
-    const dispatch = useDispatch();
+import Loading from './Loading';
+const MasonryLayout = ({ posts, isLoading }) => {
+    // const dispatch = useDispatch();
 
-    const { posts } = useSelector((state) => state.post)
-    useEffect(() => {
+    // const { posts, isLoading } = useSelector((state) => state.post)
 
-        dispatch(getPosts())
-    }, [])
+    // useEffect(() => {
+    //     if (searchTerm !== '') {
+    //         dispatch(getPostsBySearch(searchTerm))
 
-    console.log(posts)
+    //     }
+    //     else {
+    //         dispatch(getPosts())
+
+    //     }
+    //     console.log(posts)
+
+    // }, [searchTerm])
+
+
+    if (isLoading) {
+        return <Loading />
+    }
+
     const breakpointColumnsObj = {
         default: 4,
         3000: 6,
@@ -22,13 +37,18 @@ const MasonryLayout = () => {
         500: 1,
     };
     return (
-        <Masonry breakpointCols={breakpointColumnsObj} className="flex animate-slide-fwd">
-            {posts.map((post) =>
-                <Post key={post._id} post={post} />
+        <div>
 
+            {posts?.length !== 0 &&
+                <Masonry breakpointCols={breakpointColumnsObj} className="flex animate-slide-fwd">
+                    {posts?.map((post) =>
+                        <Post key={post?._id} post={post} />
 
-            )}
-        </Masonry>
+                    )}
+                </Masonry>
+
+            }
+        </div>
     )
 }
 

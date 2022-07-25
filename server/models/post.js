@@ -15,12 +15,22 @@ const postSchema = mongoose.Schema({
         required: true
     },
     tags: [String],
-    selectedFiles: {
-        type: String,
-        required: true
-    },
     comment: {
-        type: [String],
+        type: [{
+            commentBy_id: {
+                type: mongoose.Types.ObjectId,
+                ref: "User",
+                required: true
+            },
+            commentBy_name: {
+                type: String,
+                required: true
+            },
+            content: {
+                type: String,
+                required: true
+            }
+        }],
         default: [],
     },
     likes: {
@@ -30,7 +40,11 @@ const postSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: new Date(),
-    }
+    },
+    selectedFiles: {
+        type: String,
+        required: true
+    },
 
 })
 module.exports = mongoose.model("Post", postSchema)
