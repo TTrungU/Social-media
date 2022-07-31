@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux'
+
 import thunk from 'redux-thunk'
 import './index.css';
 import App from './App';
@@ -12,15 +13,15 @@ const store = createStore(reducers, applyMiddleware(thunk))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
 
-      </Provider>
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
 
-    </BrowserRouter>
-  </React.StrictMode>
+    </Provider>
+
+  </BrowserRouter>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

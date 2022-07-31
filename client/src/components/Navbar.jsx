@@ -4,7 +4,7 @@ import AuthForm from './AuthForm'
 
 import { useDispatch } from 'react-redux';
 import { IoMdAdd, IoMdSearch } from 'react-icons/io';
-
+import { FiLogOut } from 'react-icons/fi'
 const Navbar = ({ setSearchTerm, searchTerm }) => {
 
     const dispatch = useDispatch();
@@ -59,8 +59,8 @@ const Navbar = ({ setSearchTerm, searchTerm }) => {
                             <IoMdAdd />
                         </Link>
                     </div>
-                    <button onClick={logout} className="p-2 mr-2 px-5 text-gray-700 2xl:text-xl bg-red-500 rounded-full">
-                        <h3> Logout</h3>
+                    <button onClick={logout} className="p-2 mr-2 px-5  2xl:text-xl bg-white-500 rounded-full">
+                        <FiLogOut />
                     </button>
                 </>)
 

@@ -107,7 +107,23 @@ const deletePost = async (req, res) => {
 }
 
 const likePost = async (req, res) => {
+    const { id } = req.params;
+    console.log(req.user.id)
+    if (!req.user.id) {
+        return res.json({ message: "Unauthenticated" });
+    }
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    const post = await Post.findById(id);
+    const index = post.likes.findIndex((id) => id === String(req.user.id));
+    if (index === -1) {
+        post.likes.push(req.user.id);
+    } else {
+        post.likes = post.likes.filter((id) => id !== String(req.user.id));
+    }
 
+    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
+
+    res.status(200).json(updatedPost);
 }
 
 const commentPost = async (req, res) => {
@@ -176,5 +192,14 @@ const getPostsByCreator = async (req, res) => {
     }
 }
 module.exports = {
-    createPost, getAllPosts, deletePost, getPost, commentPost, deleteComment, searchPost, getPostsByCreator, editPost
+    createPost,
+    getAllPosts,
+    deletePost,
+    getPost,
+    commentPost,
+    deleteComment,
+    searchPost,
+    getPostsByCreator,
+    editPost,
+    likePost,
 }

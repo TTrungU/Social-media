@@ -22,7 +22,7 @@ const Posts = () => {
             dispatch(getPosts())
 
         }
-        console.log(posts)
+
 
     }, [searchTerm])
 

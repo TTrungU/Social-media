@@ -18,6 +18,8 @@ export default (state = { isLoading: true, posts: [] }, action) => {
             return { ...state, posts: state.posts.filter((post) => post._id !== action.payload) };
         case 'FETCH_POST':
             return { ...state, post: action.payload.post }
+        case 'LIKE_POST':
+        case 'DELETE_COMMENT':
         case 'COMMENT':
             return {
                 ...state, posts: state.posts.map((post) => {
@@ -28,15 +30,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
 
                 })
             }
-        case 'DELETE_COMMENT':
-            return {
-                ...state, posts: state.posts.map((post) => {
-                    if (post._id === action.payload._id) {
-                        return action.payload.post;
-                    }
-                    return post
-                })
-            }
+
 
         default:
             return state

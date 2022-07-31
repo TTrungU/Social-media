@@ -4,17 +4,32 @@ import { useNavigate } from 'react-router-dom';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { deletePost } from '../actions/post'
 import { AiOutlineEdit } from 'react-icons/ai'
+import { FcLikePlaceholder } from 'react-icons/fc'
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
+import { likePost } from '../actions/post';
 import UpdatePost from './UpdatePost';
 const Post = ({ post }) => {
+    const [likes, setLikes] = useState(post?.likes)
     const [isEdit, setIsEdit] = useState(false)
     const [postHovered, setPostHovered] = useState(false);
     const [savingPost, setSavingPost] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { _id, title, creator_info, like, selectedFiles, creator } = post
     const user = JSON.parse(localStorage.getItem('profile'));
+    const userId = user?._id;
 
+    const hasLikedPost = likes?.find((like) => like === userId);
+    const handleLike = async () => {
+        if (hasLikedPost) {
+            setLikes(likes.filter((id) => id !== userId));
+        } else {
+            setLikes([...likes, userId]);
+        }
 
+        dispatch(likePost(post?._id));
+
+    };
+    if (!post) return null
 
     return (<>
         {isEdit && <UpdatePost post={post} setIsEdit={setIsEdit} />}
@@ -23,16 +38,18 @@ const Post = ({ post }) => {
             onMouseEnter={() => setPostHovered(true)}
             onMouseLeave={() => setPostHovered(false)}
         >
-            <img src={selectedFiles} alt="post" className="rounded-lg w-full "
-                onClick={() => navigate(`/post/${_id}`)}
+            <img src={post?.selectedFiles} alt="post" className="rounded-lg w-full "
+                onClick={() => navigate(`/post/${post?._id}`)}
             />
             {postHovered && (user?._id === post?.creator) && (
-                <div className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
-                    style={{ height: '100%' }}>
-                    <div className="flex items-center justify-between">
+                <div className=" flex flex-col justify-between  z-50"
+                // style={{ height: '100%' }}
+                >
+                    <div className="flex items-center justify-between absolute top-0 w-full p-1 pr-2 pt-2 pb-2  "
+                    >
                         <div className="flex gap-2 ">
-                            <button className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
-                                onClick={() => dispatch(deletePost(_id))}
+                            <button className="bg-white w-9 h-9 p-2 z-10 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
+                                onClick={() => dispatch(deletePost(post?._id))}
                             >
 
                                 <AiTwotoneDelete />
@@ -40,7 +57,7 @@ const Post = ({ post }) => {
 
                         </div>
                         <div className="flex gap-2 ">
-                            <button className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
+                            <button className="bg-white w-9 h-9 p-2 z-10 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
                                 onClick={() => setIsEdit(true)}
                             >
                                 <AiOutlineEdit />
@@ -50,17 +67,27 @@ const Post = ({ post }) => {
                     </div>
                 </div>
             )}
-            {/* <Link to={`/user-profile/${creator}`} className="flex gap-2 mt-2 items-center">
-                <img
-                    className="w-8 h-8 rounded-full object-cover"
-                    src={postedBy?.image}
-                    alt="user-profile"
-                />
-            </Link> */}
 
 
 
-            <p className="font-semibold capitalize">{creator_info?.[0].username}</p>
+            <div className="flex flex-row justify-between ">
+
+                <p className="font-semibold capitalize  p-1  pr-2 pt-2 pb-2">{post?.creator_info?.[0].username}</p>
+                {user && (
+
+                    <div className="flex  p-1  pr-2 pt-2 pb-2  ">
+                        <p>{likes?.length}</p>
+                        <button className="bg-white w-8 h-8 p-1 z-10 rounded-full flex items-center justify-center text-rose-400  text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
+                            onClick={handleLike}
+                        >
+                            { } <AiFillHeart />
+                        </button>
+                    </div>
+                )}
+
+            </div>
+
+
 
         </div >
     </>

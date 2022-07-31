@@ -24,3 +24,4 @@ export const comment = (id, value) => API.post(`/api/posts/${id}/comment`, value
 export const deleteComment = (id, commentId) => API.post(`/api/posts/${id}/deleteComment`, commentId)
 export const deletePost = (id) => API.delete(`/api/posts/${id}`);
 export const editPost = (id, newPost) => API.patch(`/api/posts/${id}`, newPost)
+export const likePost = (id) => API.patch(`/api/posts/${id}/likePost`)
