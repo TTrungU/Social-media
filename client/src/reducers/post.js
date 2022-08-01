@@ -19,6 +19,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
         case 'FETCH_POST':
             return { ...state, post: action.payload.post }
         case 'LIKE_POST':
+            return { ...state, posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)) };
         case 'DELETE_COMMENT':
         case 'COMMENT':
             return {

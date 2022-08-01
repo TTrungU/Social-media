@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { AiTwotoneDelete } from 'react-icons/ai';
@@ -18,8 +18,10 @@ const Post = ({ post }) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     const userId = user?._id;
 
+    const userName = useRef(post?.creator_info?.[0].username);
+
     const hasLikedPost = likes?.find((like) => like === userId);
-    const handleLike = async () => {
+    const handleLike = () => {
         if (hasLikedPost) {
             setLikes(likes.filter((id) => id !== userId));
         } else {
@@ -27,7 +29,7 @@ const Post = ({ post }) => {
         }
 
         dispatch(likePost(post?._id));
-
+        console.log(post?._id)
     };
     if (!post) return null
 
@@ -72,7 +74,7 @@ const Post = ({ post }) => {
 
             <div className="flex flex-row justify-between ">
 
-                <p className="font-semibold capitalize  p-1  pr-2 pt-2 pb-2">{post?.creator_info?.[0].username}</p>
+                <p className="font-semibold capitalize  p-1  pr-2 pt-2 pb-2">{userName.current}</p>
                 {user && (
 
                     <div className="flex  p-1  pr-2 pt-2 pb-2  ">

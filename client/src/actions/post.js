@@ -95,6 +95,7 @@ export const deletePost = (id) => async (dispatch) => {
 
 export const updatePost = (id, post) => async (dispatch) => {
     try {
+
         const { data } = await API.editPost(id, post);
 
         dispatch({ type: 'UPDATE_POST', payload: data });
@@ -104,9 +105,9 @@ export const updatePost = (id, post) => async (dispatch) => {
 };
 
 export const likePost = (id) => async (dispatch) => {
-    const user = JSON.parse(localStorage.getItem('profile'));
+
     try {
-        const { data } = await API.likePost(id, user?.token);
+        const { data } = await API.likePost(id);
 
         dispatch({ type: "LIKE_POST", payload: data });
     } catch (error) {

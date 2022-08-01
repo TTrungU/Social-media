@@ -10,16 +10,16 @@ const UpdatePost = ({ post, setIsEdit }) => {
     const dispatch = useDispatch();
     const { title, message, tags, selectedFiles, _id, creator } = post;
     const [postData, setPostData] = useState({ title: title, message: message, tags: tags, selectedFiles: selectedFiles, creator: creator })
-    const handleSubmit = () => {
-        console.log(postData)
-        console.log({ title, message, tags, selectedFiles })
+    const handleSubmit = async () => {
+
+        console.log(postData.selectedFiles)
         dispatch(updatePost(_id, postData));
         setIsEdit(false)
 
     }
 
     return (
-        <div className="z-10 absolute flex flex-col justify-center items-center top-0 right-0 bg-blackOverlay w-screen h-screen">
+        <div className="z-20 absolute flex flex-col justify-center items-center top-0 right-0 bg-blackOverlay w-full h-full">
 
             <div className="flex flex-col justify-center items-center mt-5 lg:h-4/5 ">
                 <div className="flex  relative lg:flex-row flex-col justify-center rounded-lg items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
