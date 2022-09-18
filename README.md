@@ -1,4 +1,4 @@
-# Social-media-fullstack
+# Social-media
 
 ![image](https://user-images.githubusercontent.com/101043181/182017375-def8a48e-ad7e-4185-ac31-193a89ae830c.png)
 
